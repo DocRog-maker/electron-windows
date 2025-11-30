@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Electron PDF Viewer</title>
+  <script src='./lib/webviewer/webviewer.min.js'></script>
+</head>
+
+<body>
+  <!-- Don't set the width and height to 100% otherwise you get some funky auto-resize behavior. Use vh instead. -->
+  <!-- <div id="viewer" style="width:100%; height:100%;"></div> -->
+  <div id="viewer" style="height:100vh"></div>
+
+  <script>
+    let initPath = ''
+
+    // If starting from cold, then the initPath needs to be set here, 
+    // since the even fires before WebViewer is initialized 
+    window.electronAPI.onOpenPdf((path) => {
+      initPath = path;
+    })
+
+    WebViewer({
+      path: './lib/webviewer',
+      enableFilePicker: true,
+    }, document.getElementById('viewer'))
+      .then(instance => {
+        window.webviewerInstance = instance;
+
+        // Load the initial PDF if there is one, typically when opened from the OS from a cold start
+        if (initPath) {
+          instance.UI.loadDocument(initPath);
+        }
+
+        // Listen for OS-opened PDFs, which works when the app is already running
+        window.electronAPI.onOpenPdf((path) => {
+          instance.UI.loadDocument(path);
+        });
+
+        // Drag & drop support
+        document.addEventListener('dragover', e => e.preventDefault());
+        document.addEventListener('drop', async e => {
+          e.preventDefault();
+          const file = e.dataTransfer.files[0];
+          if (file) {
+            const buf = await file.arrayBuffer();
+            const blob = new Blob([buf], { type: 'application/pdf' });
+            instance.UI.loadDocument(blob, { filename: file.name });
+          }
+        });
+      });
+  </script>
+</body>
+
+</html>

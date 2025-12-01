@@ -29,16 +29,5 @@ if (!gotLock) {
     mainWindow.setMenuBarVisibility(false);
     mainWindow.loadFile('index.html')
 
-    // Handle first launch with a file
-    const filePath = process.argv.find(arg => arg.endsWith('.pdf'));
-    if (mainWindow.webContents.isLoading()) {
-      mainWindow.webContents.once('did-finish-load', () => {
-        mainWindow.webContents.send('open-pdf', filePath);
-      });
-    } else {
-      // Window already loaded, send immediately
-      mainWindow.webContents.send('open-pdf', filePath);
-    }
-
   });
 }

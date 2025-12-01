@@ -13,13 +13,6 @@
   <div id="viewer" style="height:100vh"></div>
 
   <script>
-    let initPath = ''
-
-    // If starting from cold, then the initPath needs to be set here, 
-    // since the even fires before WebViewer is initialized 
-    window.electronAPI.onOpenPdf((path) => {
-      initPath = path;
-    })
 
     WebViewer({
       path: './lib/webviewer',
@@ -27,11 +20,6 @@
     }, document.getElementById('viewer'))
       .then(instance => {
         window.webviewerInstance = instance;
-
-        // Load the initial PDF if there is one, typically when opened from the OS from a cold start
-        if (initPath) {
-          instance.UI.loadDocument(initPath);
-        }
 
         // Listen for OS-opened PDFs, which works when the app is already running
         window.electronAPI.onOpenPdf((path) => {

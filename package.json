@@ -6,38 +6,17 @@
   "author": "",
   "type": "commonjs",
   "main": "main.js",
-  "build": {
-    "appId": "com.mycompany.myapp",
-    "productName": "My PDF Viewer",
-    "files": [
-      "main.js",
-      "index.html",
-      "preload.js",
-      "lib/**/*"
-    ],
-    "win": {
-      "target": "nsis"
-    },
-    "fileAssociations": [
-      {
-        "ext": "pdf",
-        "name": "PDF Document",
-        "description": "Open PDF files with My Electron PDF App"
-      }
-    ]
-  },
+ 
   "scripts": {
     "start": "npm run copy-webviewer && electron .",
-    "copy-and-dist": "npm run copy-webviewer && npm run dist",
-    "copy-webviewer": "cmd /c \"if not exist lib\\webviewer mkdir lib\\webviewer && xcopy node_modules\\@pdftron\\webviewer\\public lib\\webviewer /E /I /Y  && xcopy node_modules\\@pdftron\\webviewer\\webviewer.min.js lib\\webviewer /Y\"",
-    "dist": "electron-builder"
+    "copy-webviewer": "cmd /c \"if not exist lib\\webviewer mkdir lib\\webviewer && xcopy node_modules\\@pdftron\\webviewer\\public lib\\webviewer /E /I /Y  && xcopy node_modules\\@pdftron\\webviewer\\webviewer.min.js lib\\webviewer /Y\""
   },
   "devDependencies": {
     "electron": "^38.3.0",
     "electron-builder": "^26.0.12"
   },
   "dependencies": {
-    "@pdftron/webviewer": "^11.8.0",
+    "@pdftron/webviewer": "^11.98.0",
     "electron-log": "^5.4.3"
   }
 }

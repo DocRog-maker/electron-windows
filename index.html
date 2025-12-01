@@ -18,24 +18,6 @@
       enableFilePicker: true,
     }, document.getElementById('viewer'))
       .then(instance => {
-        window.webviewerInstance = instance;
-
-        // Listen for OS-opened PDFs, which works when the app is already running
-        window.electronAPI.onOpenPdf((path) => {
-          instance.UI.loadDocument(path);
-        });
-
-        // Drag & drop support
-        document.addEventListener('dragover', e => e.preventDefault());
-        document.addEventListener('drop', async e => {
-          e.preventDefault();
-          const file = e.dataTransfer.files[0];
-          if (file) {
-            const buf = await file.arrayBuffer();
-            const blob = new Blob([buf], { type: 'application/pdf' });
-            instance.UI.loadDocument(blob, { filename: file.name });
-          }
-        });
       });
   </script>
 </body>

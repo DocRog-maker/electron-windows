@@ -19,12 +19,7 @@
     }, document.getElementById('viewer'))
       .then(instance => {
         window.webviewerInstance = instance;
-
-        // Listen for OS-opened PDFs, which works when the app is already running
-        window.electronAPI.onOpenPdf((path) => {
-          instance.UI.loadDocument(path);
-        });
-
+        
         // Drag & drop support
         document.addEventListener('dragover', e => e.preventDefault());
         document.addEventListener('drop', async e => {

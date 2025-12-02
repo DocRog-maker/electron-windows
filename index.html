@@ -17,6 +17,8 @@
     WebViewer({
       path: './lib/webviewer',
       enableFilePicker: true,
+      //You can get a trial license from https://docs.apryse.com/web/guides/get-started/trial-key
+      licenseKey:'[Your license key]'
     }, document.getElementById('viewer'))
       .then(instance => {
         window.webviewerInstance = instance;
